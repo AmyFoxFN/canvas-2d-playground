@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    canvas {
-      background-color: aqua;
+    canvas, video {
+      border: solid 1px black;
     }
   </style>
 </head>
 <body>
   <canvas></canvas>
   <video controls></video>
+  <br>
+  <button onclick="addAnotherRect()">add another rect to canvas(only once)</button>
   <script>
     const canvas = document.querySelector('canvas')
     window.canvas = canvas
@@ -25,9 +27,10 @@
     const context = canvas.getContext('2d')
     context.fillRect(0,0,100, 50)
 
-    setTimeout(() => {
+    function addAnotherRect() {
       context.fillRect(100, 50, 100, 50)
-    }, 5000)
+    }
+  </script>
   </script>
 </body>
 </html>
