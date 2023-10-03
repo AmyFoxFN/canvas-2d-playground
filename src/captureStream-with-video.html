@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      background-color: aqua;
+    }
+  </style>
+</head>
+<body>
+  <canvas></canvas>
+  <video controls></video>
+  <script>
+    const canvas = document.querySelector('canvas')
+    window.canvas = canvas
+    const canvasStream = canvas.captureStream()
+
+    const video = document.querySelector("video")
+    window.video = video
+    video.srcObject = canvasStream
+
+    const context = canvas.getContext('2d')
+    context.fillRect(0,0,100, 50)
+
+    setTimeout(() => {
+      context.fillRect(100, 50, 100, 50)
+    }, 5000)
+  </script>
+</body>
+</html>
