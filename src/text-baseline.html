@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: solid 1px green;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="550" height="500"></canvas>
+  <script>
+    const canvas = document.querySelector('canvas')
+    const ctx = canvas.getContext('2d')
+    const baselinesAboveAlphabetic = [
+      "fontBoundingBoxAscent",
+      "actualBoundingBoxAscent",
+      "emHeightAscent",
+      "hangingBaseline",
+    ];
+    const baselinesBelowAlphabetic = [
+      "ideographicBaseline",
+      "emHeightDescent",
+      "actualBoundingBoxDescent",
+      "fontBoundingBoxDescent",
+    ];
+    const baselines = [...baselinesAboveAlphabetic, ...baselinesBelowAlphabetic];
+    ctx.font = "25px serif";
+    ctx.strokeStyle = "red";
+
+    baselines.forEach((baseline, index) => {
+      const text = `Abcdefghijklmnop (${baseline})`;
+      const textMetrics = ctx.measureText(text);
+      const y = 50 + index * 50;
+      ctx.beginPath();
+      ctx.fillText(text, 0, y);
+      // let lineY = y - Math.abs(textMetrics[baseline]);
+      // if (baselinesBelowAlphabetic.includes(baseline)) {
+      //   lineY = y + Math.abs(textMetrics[baseline]);
+      // }
+      // ctx.moveTo(0, lineY);
+      // ctx.lineTo(550, lineY);
+      // ctx.stroke();
+
+      const baselineMetricValue = textMetrics[baseline];
+      if (baselineMetricValue === undefined) {
+        return;
+      }
+
+      let lineY;
+      if (baselinesBelowAlphabetic.includes(baseline)) {
+        lineY = y + Math.abs(textMetrics[baseline]);
+      } else {
+        lineY = y - Math.abs(textMetrics[baseline]);
+      }
+      ctx.moveTo(0, lineY);
+      ctx.lineTo(550, lineY);
+      ctx.stroke();
+    });
+
+  </script>
+  </script>
+</body>
+</html>
